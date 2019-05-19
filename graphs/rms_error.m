@@ -1,0 +1,13 @@
+x = [0,1,2,3,4];
+y = [4.8612,5.3828,6.0675,6.7519,7.6299];
+figure
+plot(x,y,'-bs',...
+    'LineWidth',3,...
+    'MarkerSize',9,...
+    'MarkerEdgeColor','k',...
+    'MarkerFaceColor',[0.5,0.5,0.5])
+title('rms error against number of layers')
+xlabel('Number of layers')
+ylabel('rms error')
+ylim([4.5,8])
+set(gca,'FontSize',12)

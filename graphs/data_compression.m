@@ -1,0 +1,13 @@
+x = [0,1,2,3,4];
+y = [1,1.407,1.599,1.65,1.661];
+figure
+plot(x,y,'-bs',...
+    'LineWidth',3,...
+    'MarkerSize',9,...
+    'MarkerEdgeColor','k',...
+    'MarkerFaceColor',[0.5,0.5,0.5])
+title('Data compression against number of layers in Laplacian pyramid')
+xlabel('Number of layers')
+ylabel('Data compression')
+ylim([0.6,1.8])
+set(gca,'FontSize',12)
