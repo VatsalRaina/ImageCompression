@@ -11,7 +11,7 @@ sub_img_size = rows / N;
 totBits = 0;
 for row=1:sub_img_size:rows,
     for column=1:sub_img_size:columns,
-        Ys = Yr(row:row+sub_img_size-1);
+        Ys = Yr(row:row+sub_img_size-1,column:column+sub_img_size-1);
         totBits = totBits + bpp(Ys)*numel(Ys);
     end
 end

@@ -1,0 +1,13 @@
+x = [1,1.2,1.414,1.6,1.8,2];
+y = [3.019,3.116,3.135,3.085,2.985,2.858];
+
+figure
+plot(x,y,'-bs',...
+    'LineWidth',2,...
+    'MarkerSize',8,...
+    'MarkerEdgeColor','k',...
+    'MarkerFaceColor',[0.5,0.5,0.5])
+
+title("Compression ratio against POT scaling factor")
+xlabel("s")
+ylabel("Compression ratio")
