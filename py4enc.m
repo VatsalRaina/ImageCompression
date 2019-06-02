@@ -18,4 +18,4 @@ Y3 = X3 - rowint(rowint(X4,2*h)',2*h)';
 % are sufficient to reconstruct X and require fewer bits to transmit then X
 % itself
 
-draw(beside(Y0,beside(Y1,beside(Y2,beside(Y3,X4)))));
+%draw(beside(Y0,beside(Y1,beside(Y2,beside(Y3,X4)))));

@@ -1,0 +1,15 @@
+function [vlc bits huffval] = jpeg2000enc(X, qstep, n, opthuff)
+
+dcbits = 8;
+
+% Implement DWT with regrouping so a similar approach to Huffman coding in
+% jpeg.m can be used
+
+global huffhist  % Histogram of usage of Huffman codewords.
+
+% Perform n levels of DWT
+nlevdwt;
+
+% Perform regrouping
+
+end

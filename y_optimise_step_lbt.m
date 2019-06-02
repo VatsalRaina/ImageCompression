@@ -1,5 +1,9 @@
 function stepSize = y_optimise_step_lbt(X,step_X,N,s)
-    
+
+% Boolean to select whether high frequency coefficents
+% are set to 0 prior to compression
+suppressed = true;
+
 X_qu = quantise(X,step_X);
 rms = std(X(:)-X_qu(:));
 rms_lbt = 100;
@@ -16,19 +20,31 @@ Xp(:,t) = colxfm(Xp(:,t)',Pf)';
 C = dct_ii(N);
 Y = colxfm(colxfm(Xp,C)',C)';
 
-stepSize = 22.94;
-precision = 0.001;
+if suppressed
+    for row = N:N:256
+        for col = N:N:256
+            Y(row,col) = 0;
+        end
+    end
+end
+
+stepSize = 16.58;
+riseRatio = 1;
+rise = stepSize*riseRatio;
+precision = 0.01;
 diff = 3;
 Yq = Y;
 
 while abs(diff) > precision/2
     if diff > 0
         stepSize = stepSize - precision;
+        rise = stepSize*riseRatio;
     else
         stepSize = stepSize + precision;
+        rise = stepSize*riseRatio;
     end
     
-    Yq = quantise(Y,stepSize);
+    Yq = quantise(Y,stepSize,rise);
     Z = colxfm(colxfm(Yq',C')',C');
     Zp = Z;
     Zp(:,t) = colxfm(Zp(:,t)',Pr')';
