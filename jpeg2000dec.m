@@ -11,9 +11,9 @@ dcbits=8;
 scan = diagscan(M);
 
 if (opthuff)
-  disp('Generating huffcode and ehuf using custom tables')
+  %disp('Generating huffcode and ehuf using custom tables')
 else
-  disp('Generating huffcode and ehuf using default tables')
+  %disp('Generating huffcode and ehuf using default tables')
   [bits huffval] = huffdflt(1);
 end
 % Define starting addresses of each new code length in huffcode.
@@ -38,7 +38,7 @@ i = 1;
 Zq = zeros(H, W);
 t=1:M;
 
-disp('Decoding rows')
+%disp('Decoding rows')
 for r=0:M:(H-M),
   for c=0:M:(W-M),
     yq = zeros(M,M);
@@ -87,14 +87,24 @@ for r=0:M:(H-M),
   end
 end
 
-fprintf(1, 'Inverse quantising to step size of %i\n', qstep);
+%fprintf(1, 'Inverse quantising to step size of %i\n', qstep);
 Zi=quant2(Zq,qstep,qstep);
 
 %Ungroup
 Z = dwtgroup(Zi,-n);
 % Invert n levels of DWT
-Yq=Z;
-nlevidwt;
+
+m = 256/ (2^(n-1));
+t=1:m;
+Z(t,t)=idwt(Z(t,t));
+if n>1
+    for lev = 2:n
+        m=2*m;
+        t=1:m;
+        Z(t,t)=idwt(Z(t,t));
+    end
+end
+
 % The reconstructed image returned is Z
 
 return

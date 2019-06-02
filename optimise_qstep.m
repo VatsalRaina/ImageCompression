@@ -1,21 +1,21 @@
-function qstep = optimise_qstep(X,N,M,opthuff, dcbits)
+function qstep = optimise_qstep(X,N,M,opthuff, precision, min_step, LBT)
 
 % Optimise q step such that total number of bits is less than MAX
-% Set the encoding function to be jpegenc, jpegxrenc or jpeg2000enc
+if nargin < 7, LBT = false; end
 
 MAX = 40960;
 totBits = 2*MAX;
-qstep = 39;
-precision = 0.01;
+qstep = min_step;
 
 while totBits > MAX
     qstep = qstep + precision;
-    [vlc, bits, huffval] = jpegenc(X, qstep, N, M, opthuff, dcbits);
+    if LBT
+        [vlc, bits, huffval] = jpegxrenc(X, qstep, N, M, opthuff);
+    else
+        [vlc, bits, huffval] = jpegenc(X, qstep, N, M, opthuff);
+    end
     totBits = sum(vlc(:,2));
     if opthuff
-        totBits = totBits + 1424;
+        totBits = totBits + 1429;
     end
 end
-
-disp("Total bits")
-disp(totBits)
