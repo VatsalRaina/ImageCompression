@@ -11,7 +11,7 @@ LBT_ID=2;
 DCT_ID=3;
 
 % Set parameters for levels to consider
-n = [3, 4, 5];
+n = [3, 4];
 
 % Test the DWT
 for i = 1:size(n,2)

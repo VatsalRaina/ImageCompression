@@ -21,11 +21,65 @@ if n>1
     end
 end
 
+
+
+%Quantise using an equal MSE scheme
+
+dwtstep = zeros(3,n+1);
+
+dwtstep(1,1)=qstep;
+dwtstep(2,1)=sqrt(82656/43125)*qstep;
+dwtstep(3,1)=sqrt(82656/43125)*qstep;
+
+dwtstep(1,2)=sqrt(82656/135980)*qstep;
+dwtstep(2,2)=sqrt(82656/101410)*qstep;
+dwtstep(3,2)=sqrt(82656/101410)*qstep;
+
+dwtstep(1,3)=sqrt(82656/402430)*qstep;
+dwtstep(2,3)=sqrt(82656/304980)*qstep;
+dwtstep(3,3)=sqrt(82656/304980)*qstep;
+
+if n==3
+    dwtstep(1,n+1)=sqrt(82656/288910)*qstep;
+elseif n==4
+    dwtstep(1,4)=sqrt(82656/1481500)*qstep;
+    dwtstep(2,4)=sqrt(82656/1300900)*qstep;
+    dwtstep(3,4)=sqrt(82656/1300900)*qstep;
+    dwtstep(1,n+1)=sqrt(82656/1142200)*qstep;
+elseif n==5
+    dwtstep(1,4)=sqrt(82656/1481500)*qstep;
+    dwtstep(2,4)=sqrt(82656/1300900)*qstep;
+    dwtstep(3,4)=sqrt(82656/1300900)*qstep;
+    dwtstep(1,5)=sqrt(82656/5801300)*qstep;
+    dwtstep(2,5)=sqrt(82656/5140800)*qstep;
+    dwtstep(3,5)=sqrt(82656/5140800)*qstep;
+    dwtstep(1,n+1)=sqrt(82656/4555600)*qstep;    
+else
+    disp("Use n in range 3-5 for DWT levels");
+end
+
+Yq = Y;
+m=256;
+for i = 1:n
+    m=m/2;
+    t=1:m;
+    s=m+1:2*m;
+    % Quantise the high-pass images at level i  
+    Yq(t,s)= quant1(Yq(t,s),dwtstep(3,i)); 
+    Yq(s,t)= quant1(Yq(s,t),dwtstep(2,i)); 
+    Yq(s,s)= quant1(Yq(s,s),dwtstep(1,i));
+end
+siz = 2^n;
+Yq(1:256/siz,1:256/siz) = quant1(Yq(1:256/siz,1:256/siz),dwtstep(1,n+1));
+
 % Perform regrouping
-Yg = dwtgroup(Y,n);
+Yg = dwtgroup(Yq,n);
+Yq=Yg;
+
+
+%Yq=quant1(Yg,qstep,qstep);
 
 % The rest is the same as the usual jpeg
-Yq=quant1(Yg,qstep,qstep);
 
 % Generate zig-zag scan of AC coefs.
 scan = diagscan(M);
