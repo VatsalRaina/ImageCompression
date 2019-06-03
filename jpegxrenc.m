@@ -43,7 +43,7 @@ C = dct_ii(N);
 Y = colxfm(colxfm(Xp,C)',C)';
 
 % Perform supression of 25 high-pass sub-images
-num_sup=5;
+num_sup=3;
 suppressed =true;
 if suppressed
     for row = N:N:256

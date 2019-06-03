@@ -22,7 +22,7 @@ for i = 1:size(n,2)
     if abs(currssim) > SSIM
        disp("QSTEP:"); disp(qstep); 
        % Store the model if it is better than the current stored one
-       model = [DWT_ID, n(i), n(i), qstep];
+        model = [DWT_ID, n(i), n(i), qstep];
        SSIM = abs(currssim);
     end
 end

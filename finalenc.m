@@ -1,4 +1,5 @@
 function [vlc, bits, huffval, param] = finalenc(X)
+    X=double(X);
     DWT_ID = 1;
     LBT_ID=2;
     DCT_ID=3;

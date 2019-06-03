@@ -27,6 +27,25 @@ function Z = finaldec(vlc, bits, huffval, param)
     disp("Bits required for overheads: 1429");
     totBits = vlctest(vlc) + 1429;
     disp(strcat("Total number of bits: ", num2str(totBits)));
+    
+    if scheme == LBT_ID || scheme == DCT_ID
+        Z = Z+128;
+    end
+    
+    
+    
     draw(Z);
     
+    max1 = max(Z(:));
+    min1 = min(Z(:));
+    disp(max1);
+    disp(min1);
+    Z = arrayfun(@clip,Z);
+    Z = uint8(Z);
+    
+    
+    max1 = max(Z(:));
+    min1 = min(Z(:));
+    disp(max1);
+    disp(min1);
 return
